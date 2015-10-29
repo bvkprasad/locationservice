@@ -25,9 +25,8 @@ public class Location {
 			} catch (ClassNotFoundException e) {
 				return "Driver Class Not Loaded";
 			}
-			cn = DriverManager.getConnection(
-					"mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/",
-					"adminC3VsLxV","_XGEbqPApFDA");
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
 			ps.setLong(1, 9505412103l);
 			rs = ps.executeQuery();
