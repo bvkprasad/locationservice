@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<script>
+		var phone;
+		function getPhone(){
+			phone = getElementById("phone").value;
+		}
+		
+		</script>
+	</head>
 	<body>
 		<p>This is the basic html page</p>
-		<a href="./rest/latlng/85.46/69.18">click here to know your location variables</a>
+		Phone no: <input type="text" id="phone"></input>
+		<button onclick=getPhone()>Submit</button>
+		<a href="./rest/latlng/9505412103">click here to know your location variables</a>
 	</body>
 </html>
