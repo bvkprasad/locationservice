@@ -23,7 +23,7 @@ public class Location {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				
+				return "Driver Class Not Loaded";
 			}
 			cn = DriverManager.getConnection(
 					"mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/",
