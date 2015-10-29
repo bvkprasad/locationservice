@@ -1,8 +1,7 @@
 package com.prasad.location;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,12 +19,15 @@ public class Location {
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		String query = "SELECT lat,lng FROM user_location WHERE phone = ?";
-		MysqlDataSource dataSource = new MysqlDataSource();
-		dataSource.setUser("adminC3VsLxV");
-		dataSource.setPassword("_XGEbqPApFDA");
-		dataSource.setServerName("mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/");
 		try {
-			cn = dataSource.getConnection();
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				
+			}
+			cn = DriverManager.getConnection(
+					"mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/",
+					"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
 			ps.setLong(1, 9505412103l);
 			rs = ps.executeQuery();
