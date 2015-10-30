@@ -66,7 +66,56 @@ public class Location {
 				}
 			}
 		}
-
-	
 	}
+	
+	@GET
+	@Path("/set/{ph}/{la}/{lo}")
+	public String setLocation(@PathParam("ph")double phone,@PathParam("la")double lat,@PathParam("lo")double lng){
+		Connection cn=null;
+		PreparedStatement ps=null;
+		
+		String query = "UPDATE user_location SET lat=?,lng=? WHERE phone=?";
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				return "Driver Class Not Loaded";
+			}
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
+			ps = cn.prepareStatement(query);
+			ps.setDouble(1,lat);
+			ps.setDouble(2,lng);
+			ps.setDouble(3,phone);
+			int i= ps.executeUpdate();
+			if(i==1){
+				System.out.println("SUCCESSFULLY UPDATED LOCATION WITH NEW COORDINATES");
+				return "success";
+			}
+			return "2";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "failed transaction";
+		}
+		finally{
+			if(cn != null){
+				try {
+					cn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 }
