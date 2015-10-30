@@ -15,7 +15,7 @@ public class Location {
 	
 	@GET
 	@Path("/latlng/{phone}")
-	public String getHelloWorldJSON(@PathParam("phone")double phone) {
+	public String getUserLocation(@PathParam("phone")double phone) {
 		Connection cn=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
@@ -70,7 +70,7 @@ public class Location {
 	
 	@GET
 	@Path("/set/{ph}/{la}/{lo}")
-	public String setLocation(@PathParam("ph")double phone,@PathParam("la")double lat,@PathParam("lo")double lng){
+	public String setUserLocation(@PathParam("ph")double phone,@PathParam("la")double lat,@PathParam("lo")double lng){
 		Connection cn=null;
 		PreparedStatement ps=null;
 		
@@ -98,6 +98,58 @@ public class Location {
 			e.printStackTrace();
 			return "failed transaction";
 		}
+		finally{
+			if(cn != null){
+				try {
+					cn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	@GET
+	@Path("/register/{ph}")
+	public String registerUser(@PathParam("ph")double ph){
+		Connection cn=null;
+		PreparedStatement ps=null;
+		boolean i;
+		
+		String query = "INSERT INTO user_location VALUES(?,0,0)";
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				return "Driver Class Not Loaded";
+			}
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
+			ps = cn.prepareStatement(query);
+			ps.setDouble(1,ph);
+			i= ps.execute();
+			if(i){
+				System.out.println("NEW USER SUCCESSFULLY REGISTERED WITH DEFAULT LOCATION COORDINATES");
+				return "success";
+			}else{
+				System.out.println("USER REGISTERED WITH ALREADY REGISTERED PHONE NO");
+				return "This phone no. is already registered";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "failed transaction";
+		}
+		
 		finally{
 			if(cn != null){
 				try {

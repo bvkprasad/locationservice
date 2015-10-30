@@ -5,7 +5,7 @@
 		var phone_no;
 		function getPhone(){
 			phone_no = getElementById("phone_no").value;
-			getElementById("phone").href='./rest/latlng/'+phone_no;
+			getElementById("phone").href="./rest/latlng/"+phone_no;
 		}
 		
 		</script>
@@ -13,6 +13,6 @@
 	<body>
 		<p>This is the basic html page</p>
 		Phone no: <input type="text" id="phone_no"></input>
-		<a href="#" id="phone"><button onclick=getPhone()>Submit</button><a>
+		<a href="#" id="phone" onclick=getPhone()><button>Submit</button><a>
 	</body>
 </html>
