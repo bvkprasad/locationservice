@@ -138,11 +138,11 @@ public class Location {
 			ps.setDouble(1,ph);
 			i= ps.execute();
 			if(i){
+				System.out.println("USER REGISTERED WITH ALREADY REGISTERED PHONE NO");
+				return "This phone no. is already registered";				
+			}else{
 				System.out.println("NEW USER SUCCESSFULLY REGISTERED WITH DEFAULT LOCATION COORDINATES");
 				return "success";
-			}else{
-				System.out.println("USER REGISTERED WITH ALREADY REGISTERED PHONE NO");
-				return "This phone no. is already registered";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
