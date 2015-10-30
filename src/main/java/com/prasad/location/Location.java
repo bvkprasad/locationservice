@@ -29,7 +29,7 @@ public class Location {
 			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
-			ps.setLong(1, 9505412103l);
+			ps.setLong(1,phone);
 			rs = ps.executeQuery();
 			rs.next();
 			double lat = rs.getDouble(1);
