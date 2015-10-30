@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 
 @Path("/")
 public class Location {
+	
 	@GET
 	@Path("/latlng/{phone}")
 	public String getHelloWorldJSON(@PathParam("phone")double phone) {
@@ -33,7 +34,7 @@ public class Location {
 			rs.next();
 			double lat = rs.getDouble(1);
 			double lng = rs.getDouble(2);
-			return "latitude is "+lat+"and longitude is "+lng;
+			return "{\"latitude\":"+lat+","+"\"longitude\":"+lng+"}";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
