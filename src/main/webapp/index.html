@@ -71,6 +71,8 @@
 			}
 		}
 	   	http.open("GET",url,true);
+		http.connect();
+		
 	}
 	function toggleBounce() {
 		if (marker.getAnimation() !== null) {
