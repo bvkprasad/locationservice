@@ -53,7 +53,7 @@
 	setInterval(function(){main();},3000);
 	function main() {
 		http=new XMLHttpRequest();
-		url="https://locationservice-anikini.rhcloud.com/rest/latlng/"+no;
+		url="./rest/latlng/"+no;
 		http.onreadystatechange = function(){
 			if(http.readyState==4 && http.status==200){
 			var coordinates=JSON.parse(http.responseText);
@@ -71,7 +71,6 @@
 			}
 		}
 	   	http.open("GET",url,true);
-		http.send();
 	}
 	function toggleBounce() {
 		if (marker.getAnimation() !== null) {
