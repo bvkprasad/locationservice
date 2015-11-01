@@ -1,48 +1,32 @@
-<!--<!DOCTYPE html>
-<html>
-	<head>
-		<script>
-		var phone_no;
-		function getPhone(){
-			phone_no = document.getElementById("phone_no").value;
-			var a = document.getElementById("phone");
-			a.href="./rest/latlng/"+phone_no;
-		}
-		
-		</script>
-	</head>
-	<body>
-		<p>This is the basic html page</p>
-		Phone no: <input type="text" id="phone_no"></input>
-		<a id="phone" onclick=getPhone()><button>Submit</button><a>
-	</body>
-</html>-->
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Track Page</title>
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&callback=initMap"
-        async defer></script>
-    <script>
-	var http;
-	var url;
+<head>
+<title>Track Page</title>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map {
+	height: 100%;
+}
+</style>
+</head>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<body>
+	<div id="map"></div>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&callback=initMap"
+		async defer></script>
+	<script>
 	var marker;
 	var user_lat,user_lng;
 	var map;
 	var no = prompt("Enter the phone no. you want to track");
+	var url = "./rest/latlng/"+no;
 	function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
             		center: {lat:17.37, lng: 82.50},
@@ -50,38 +34,28 @@
             		});
 	}
 
-	setInterval(function(){main();},3000);
-	function main() {
-		http=new XMLHttpRequest();
-		url="./rest/latlng/"+no;
-		http.onreadystatechange = function(){
-			if(http.readyState==4 && http.status==200){
-			var coordinates=JSON.parse(http.responseText);
-			user_lat=coordinates.Latitude;
-			user_lng=coordinates.Longitude;
-			marker = new google.maps.Marker({
-    			map: map,
-    			draggable:true,
-    			animation: google.maps.Animation.DROP,
-			label:'prasad',
-    			position: {lat: user_lat, lng: user_lng}
-			});
-			map.setCenter(new google.maps.LatLng(user_lat,user_lng));
-			marker.addListener('click', toggleBounce);
-			}
-		}
-	   	http.open("POST",url,true);
-		http.send();
-		
-	}
-	function toggleBounce() {
-		if (marker.getAnimation() !== null) {
-			marker.setAnimation(null);
-		}else {
-			marker.setAnimation(google.maps.Animation.BOUNCE);
-		}
-	}
-	   
+	setInterval($(function(){
+					$.post(url,function(data,textStatus){
+					var coordinates = JSON.parse(data);
+					user_lat = coordinates.latitude;
+					user_lng = coordinates.longitude;	
+					marker = new google.maps.Marker({
+								map: map,
+								draggable:true,
+								animation: google.maps.Animation.DROP,
+								label:no,
+								position: {lat: user_lat, lng: user_lng}
+							});
+					map.setCenter(new google.maps.LatLng(user_lat,user_lng));
+					$(marker).click(function(){
+						if (marker.getAnimation() !== null) {
+							marker.setAnimation(null);
+						}else {
+							marker.setAnimation(google.maps.Animation.BOUNCE);
+						}
+					})
+					}
+				},3000);	   
     </script>
-  </body>
+</body>
 </html>
