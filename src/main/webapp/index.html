@@ -47,13 +47,6 @@ html, body {
 								position: {lat: user_lat, lng: user_lng}
 							});
 					map.setCenter(new google.maps.LatLng(user_lat,user_lng));
-					$(marker).click(function(){
-						if (marker.getAnimation() !== null) {
-							marker.setAnimation(null);
-						}else {
-							marker.setAnimation(google.maps.Animation.BOUNCE);
-						}
-					})
 					}
 				},3000);	   
     </script>
