@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.ws.rs.POST;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,7 +14,7 @@ import javax.ws.rs.PathParam;
 @Path("/")
 public class Location {
 	
-	@GET
+	@POST
 	@Path("/latlng/{phone}")
 	public String getUserLocation(@PathParam("phone")double phone) {
 		Connection cn=null;
