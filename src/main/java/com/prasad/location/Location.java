@@ -14,6 +14,33 @@ import javax.ws.rs.PathParam;
 @Path("/")
 public class Location {
 	
+	@GET
+	@Path("/network")
+	public String cabNetwork(){
+		Connection cn=null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		String json = null;
+		String query = "SELECT lat,lng FROM user_location";
+		try{
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+			}catch(ClassNotFoundException e){
+				return "driver";
+			}
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
+			ps = cn.prepareStatement(query);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				String obj = "{\"latitude\":"+rs.getDouble(1)+",\"longitude\":"+rs.getDouble(2)+"}";
+				json = json+","+obj;
+			}
+			String jsonArray = "["+json+"]";
+		}
+		
+	}
+	
 	@POST
 	@Path("/latlng/{phone}")
 	public String getUserLocation(@PathParam("phone")double phone) {
