@@ -38,8 +38,9 @@ public class Location {
 				if(check){
 					json = obj;
 					check = false;
-				}
+				}else{
 				json = json+","+obj;
+				}
 			}
 			String jsonArray = "["+json+"]";
 			return jsonArray;
