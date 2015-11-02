@@ -22,7 +22,6 @@ html, body {
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&callback=initMap"
 		async defer></script>
 	<script>
-	var marker;
 	var user_lat,user_lng;
 	var map;
 	var url = "./rest/network";
@@ -33,25 +32,19 @@ html, body {
             		});
 	}
 	$.get(url,function(data,textStatus){
-									var o = JSON.parse(jsonstring);
-									alert(o.features.length);
-									});
-	<!--setInterval(function(){
-								$.get(url,function(data,textStatus){
-									var o = JSON.parse(data);
-									alert(o.features.length);	
-									
-									new google.maps.Marker({
+									var o = data;
+									var r = 0;
+									while(r<o.length){
+										user_lat = o[r].latitude;
+										user_lng = o[r].longitude;
+										new google.maps.Marker({
 																map: map,
 																draggable:false,
-																animation: google.maps.Animation.DROP,
-																label:no,
 																position: {lat: user_lat, lng: user_lng}
 															});
-									map.setCenter(new google.maps.LatLng(user_lat,user_lng));
-									
-								})
-							},3000);	-->   
+										
+									}
+								});
     </script>
 </body>
 </html>
