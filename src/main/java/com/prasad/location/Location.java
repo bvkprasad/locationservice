@@ -37,8 +37,36 @@ public class Location {
 				json = json+","+obj;
 			}
 			String jsonArray = "["+json+"]";
+			return jsonArray;
+		}catch(SQLException e){
+			return "failed transaction";
 		}
-		
+		finally{
+			if(cn != null){
+				try {
+					cn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(rs != null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	@POST
