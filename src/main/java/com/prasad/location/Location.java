@@ -32,8 +32,13 @@ public class Location {
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
 			rs = ps.executeQuery();
+			boolean check = true;
 			while(rs.next()){
 				String obj = "{\"latitude\":"+rs.getDouble(1)+",\"longitude\":"+rs.getDouble(2)+"}";
+				if(check){
+					json = obj;
+					check = false;
+				}
 				json = json+","+obj;
 			}
 			String jsonArray = "["+json+"]";
