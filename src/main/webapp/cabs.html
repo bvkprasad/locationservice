@@ -32,19 +32,27 @@ html, body {
             		});
 	}
 	$.get(url,function(data,textStatus){
-									var o = data;
-									var r = 0;
-									while(r<o.length){
-										user_lat = o[r].latitude;
-										user_lng = o[r].longitude;
-										r++;
-										new google.maps.Marker({
-																map: map,
-																draggable:false,
-																position: {lat: user_lat, lng: user_lng}
-															});
-										
-									}
+									$.each(data, function(index,value){
+									  var i = true;
+									  $.each(value,function(key,ans){
+										if(i){
+										  user_lat = ans;
+										}else{
+										  user_lng = ans;
+										}
+										if(!i){
+										  new google.maps.Marker({
+											  map: map,
+											  draggable: false,
+											  position: {
+												lat: user_lat,
+												lng: user_lng
+											  }
+											});
+										}
+										i=false;
+									  });
+									});
 								});
     </script>
 </body>
