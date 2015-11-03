@@ -1,59 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Track Page</title>
-<style>
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
+	<head>
+	  <script data-require="jquery@*" data-semver="2.1.4" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&amp;callback=initMap" async="" defer=""></script>
+	  <script>
+		var user_lat, user_lng;
+		var map;
+		var url = "./rest/network";
 
-#map {
-	height: 100%;
-}
-</style>
-</head>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<body>
-	<div id="map"></div>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&callback=initMap"
-		async defer></script>
-	<script>
-	var user_lat,user_lng;
-	var map;
-	var url = "./rest/network";
-	function initMap() {
-	map = new google.maps.Map(document.getElementById('map'), {
-            		center: {lat:17.37, lng: 82.50},
-            		zoom: 8
-            		});
-	}
-	$.get(url,function(data,textStatus){
-									$.each(data, function(index,value){
-									  var i = true;
-									  $.each(value,function(key,ans){
-										if(i){
-										  user_lat = ans;
-										}else{
-										  user_lng = ans;
-										}
-										if(!i){
-										  new google.maps.Marker({
-											  map: map,
-											  draggable: false,
-											  position: {
-												lat: user_lat,
-												lng: user_lng
-											  }
-											});
-										}
-										i=false;
-									  });
-									});
-								});
-    </script>
-</body>
+		function initMap() {
+		  map = new google.maps.Map(document.getElementById('map'), {
+			center: {
+			  lat: 17,
+			  lng: 80
+			},
+			zoom: 5
+		  });
+		  $.get(url, function(data, successStatus) {
+			$.each(data, function(index, value) {
+			  new google.maps.Marker({
+				position: value,
+				draggable: false,
+				map: map,
+				title: "cab"
+			  });
+			});
+		  });
+		}
+	  </script>
+	  <title>Track Page</title>
+	  <style>
+		html,
+		body {
+		  height: 100%;
+		  margin: 0;
+		  padding: 0;
+		}
+		
+		#map {
+		  height: 100%;
+		}
+	  </style>
+	</head>
+	<body>
+	  <div id="map"></div>
+	</body>
 </html>

@@ -34,7 +34,7 @@ public class Location {
 			rs = ps.executeQuery();
 			boolean check = true;
 			while(rs.next()){
-				String obj = "{\"latitude\":"+rs.getDouble(1)+",\"longitude\":"+rs.getDouble(2)+"}";
+				String obj = "{lat:"+rs.getDouble(1)+",lng:"+rs.getDouble(2)+"}";
 				if(check){
 					json = obj;
 					check = false;
