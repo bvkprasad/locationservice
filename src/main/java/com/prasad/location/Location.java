@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
 @Path("/")
 public class Location {
 	
-	@GET
+	@POST
 	@Path("/network")
 	public String cabNetwork(){
 		Connection cn=null;
