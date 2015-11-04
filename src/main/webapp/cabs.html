@@ -16,24 +16,16 @@
         },
         zoom: 5
       });
-      var data = [{
-        lat: 12.74709361,
-        lng: 79.98479497
-      }, {
-        lat: 12,
-        lng: 80
-      }, {
-        lat: 23,
-        lng: 80.0
-      }];
-      $.each(data, function(index, value) {
-        new google.maps.Marker({
-          position: value,
-          draggable: false,
-          map: map,
-          title: "cab"
-        });
-      });
+		$.get(url,function(data,successStatus){
+			$.each(data, function(index, value) {
+				new google.maps.Marker({
+				  position: value,
+				  draggable: false,
+				  map: map,
+				  title: "cab"
+				});
+			});
+		});
     }
   </script>
   <title>Track Page</title>
