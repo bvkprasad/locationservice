@@ -1,48 +1,58 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	  <script data-require="jquery@*" data-semver="2.1.4" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&amp;callback=initMap" async="" defer=""></script>
-	  <script>
-		var user_lat, user_lng;
-		var map;
-		var url = "./rest/network";
 
-		function initMap() {
-		  map = new google.maps.Map(document.getElementById('map'), {
-			center: {
-			  lat: 17,
-			  lng: 80
-			},
-			zoom: 5
-		  });
-		  $.get(url, function(data, successStatus) {
-			$.each(data, function(index, value) {
-			  new google.maps.Marker({
-				position: value,
-				draggable: false,
-				map: map,
-				title: "cab"
-			  });
-			});
-		  });
-		}
-	  </script>
-	  <title>Track Page</title>
-	  <style>
-		html,
-		body {
-		  height: 100%;
-		  margin: 0;
-		  padding: 0;
-		}
-		
-		#map {
-		  height: 100%;
-		}
-	  </style>
-	</head>
-	<body>
-	  <div id="map"></div>
-	</body>
+<head>
+  <script data-require="jquery@*" data-semver="2.1.4" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&amp;callback=initMap" async defer></script>
+  <script>
+    var user_lat, user_lng;
+    var map;
+    var url = "./rest/network";
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+          lat: 17,
+          lng: 80
+        },
+        zoom: 5
+      });
+      var data = [{
+        lat: 12.74709361,
+        lng: 79.98479497
+      }, {
+        lat: 12,
+        lng: 80
+      }, {
+        lat: 23,
+        lng: 80.0
+      }];
+      $.each(data, function(index, value) {
+        new google.maps.Marker({
+          position: value,
+          draggable: false,
+          map: map,
+          title: "cab"
+        });
+      });
+    }
+  </script>
+  <title>Track Page</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #map {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+</body>
+
 </html>
