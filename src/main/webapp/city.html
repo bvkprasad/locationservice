@@ -48,7 +48,8 @@
 			});
 					
 			$.post(url,function(data,status){
-				$.each(data,function(i,value) {
+				var latlng = JSON.parse(data);
+				$.each(latlng,function(i,value) {
 					var j = new google.maps.LatLng(value.lat,value.lng);
 					if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
 						new google.maps.Marker({
