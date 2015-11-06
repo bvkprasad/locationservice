@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script data-require="jquery@*" data-semver="2.1.4" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVD0ngfhOFs5rnww7UFyz9rN6UznOIZ1U&libraries=geometry"></script>
+
+  <title>Track Page</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #map {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+    <script>
+    var user_lat, user_lng;
+    var map;
+    var url = "./rest/network";
+	var city = prompt("Enter the city name to know the cabs running there");
+    function initMap() {
+		map = new google.maps.Map(document.getElementById('map'),{
+			center: {
+			  lat: 17,
+			  lng: 80
+			},
+			zoom: 5
+		});
+		var uri = "http://maps.googleapis.com/maps/api/geocode/json?address="+city;
+		$.getJSON(uri,function(location){
+			var loc = location.results[0].geometry.location;
+			var cityCircle = new google.maps.Circle({
+			  strokeColor: '#FF0000',
+			  strokeOpacity: 0.2,
+			  strokeWeight: 1,
+			  map: map,
+			  center: loc,
+			  radius: 20000
+			});
+					
+			$.post(url,function(data,status){
+				$.each(data,function(i,value) {
+					var j = new google.maps.LatLng(value.lat,value.lng);
+					if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
+						new google.maps.Marker({
+							position: value,
+							draggable: false,
+							map: map,
+							title: "cab"
+						});
+					}
+				});
+			});	
+		});
+    }
+	google.maps.event.addDomListener(window, "load", initMap);
+  </script>
+</body>
+
+</html>

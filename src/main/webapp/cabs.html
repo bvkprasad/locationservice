@@ -9,13 +9,13 @@
     var map;
     var url = "./rest/network";
     function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-          lat: 17,
-          lng: 80
-        },
-        zoom: 5
-      });
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: {
+			  lat: 17,
+			  lng: 80
+			},
+			zoom: 5
+		});
 		$.post(url,function(data,successStatus){
 			var json = JSON.parse(data);
 			$.each(json, function(index, value) {
@@ -26,8 +26,7 @@
 				  title: "cab"
 				});
 			});
-		});	
-				
+		});					
     }
   </script>
   <title>Track Page</title>
