@@ -46,21 +46,23 @@
 			  center: loc,
 			  radius: 20000
 			});
-					
-			$.post(url,function(data,status){
-				var latlng = JSON.parse(data);
-				$.each(latlng,function(i,value) {
-					var j = new google.maps.LatLng(value.lat,value.lng);
-					if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
-						new google.maps.Marker({
-							position: value,
-							draggable: false,
-							map: map,
-							title: "cab"
-						});
-					}
-				});
-			});	
+				
+			setInterval(function(){
+				$.post(url,function(data,status){
+					var latlng = JSON.parse(data);
+					$.each(latlng,function(i,value) {
+						var j = new google.maps.LatLng(value.lat,value.lng);
+						if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
+							new google.maps.Marker({
+								position: value,
+								draggable: false,
+								map: map,
+								title: "cab"
+							});
+						}
+					});
+				});	
+			},3000); 
 		});
     }
 	google.maps.event.addDomListener(window, "load", initMap);
