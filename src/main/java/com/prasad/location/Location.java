@@ -14,6 +14,153 @@ import javax.ws.rs.PathParam;
 @Path("/")
 public class Location {
 	
+	@GET
+	@Path("/register/{cab}")
+	public String registerCab(@PathParam("cab")double cab){
+		Connection cn=null;
+		PreparedStatement ps=null;
+		boolean i;
+		
+		String query = "INSERT INTO user_location VALUES(?,0,0,0,off)";
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				return "Driver Class Not Loaded";
+			}
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
+			ps = cn.prepareStatement(query);
+			ps.setDouble(1,cab);
+			i= ps.execute();
+			if(i){
+				return "DUPLICATE";				
+			}else{
+				return "OK";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "failed transaction";
+		}
+		
+		finally{
+			if(cn != null){
+				try {
+					cn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	@GET
+	@Path("/check/{cabno}/{mobile_id}")
+	public String checkCab(@PathParam("cabno")String cab,@PathParam("mobile_id")String id){
+		Connection cn=null;
+		PreparedStatement ps = null;
+		String json = null;
+		String query= "UPDATE user_location SET mobile_id = ? WHERE cab = ?";
+		try{
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+			}catch(ClassNotFoundException e){
+				return "driver";
+			}
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
+			ps = cn.prepareStatement(query);
+			ps.setString(1,id);
+			ps.setString(2,cab);
+			int count = ps.executeUpdate();
+			if(count==1){
+				return "OK";
+			}else{
+				return "FAILED";
+			}
+		}catch(SQLException e){
+			return "failed transaction";
+		}
+		finally{
+			if(cn != null){
+				try {
+					cn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	@GET
+	@Path("/set/{cab}/{la}/{lo}/{status}")
+	public void setCabLocation(@PathParam("cab")String cab,@PathParam("la")double lat,@PathParam("lo")double lng,@PathParam("status")String status){
+		Connection cn=null;
+		PreparedStatement ps=null;
+		
+		String query = "UPDATE user_location SET lat=?,lng=?,status=? WHERE cab=?";
+		try {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				return "Driver Class Not Loaded";
+			}
+			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
+			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
+			ps = cn.prepareStatement(query);
+			ps.setDouble(1,lat);
+			ps.setDouble(2,lng);
+			ps.setString(3,status);
+			ps.setString(4,cab);
+			int count= ps.executeUpdate();
+			if(count==1){
+				System.out.println("Saved location successfully");
+			}
+			else{
+				System.out.println("LOCATION NOT SAVED");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{
+			if(cn != null){
+				try {
+					cn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(ps != null){
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	@POST
 	@Path("/network")
 	public String cabNetwork(){
@@ -76,12 +223,12 @@ public class Location {
 	}
 	
 	@POST
-	@Path("/latlng/{phone}")
-	public String getUserLocation(@PathParam("phone")double phone) {
+	@Path("/latlng/{cab}")
+	public String getUserLocation(@PathParam("phone")String cab) {
 		Connection cn=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		String query = "SELECT lat,lng FROM user_location WHERE phone = ?";
+		String query = "SELECT lat,lng FROM user_location WHERE cab = ?";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -91,7 +238,7 @@ public class Location {
 			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
-			ps.setDouble(1,phone);
+			ps.setDouble(1,cab);
 			rs = ps.executeQuery();
 			rs.next();
 			double lat = rs.getDouble(1);
@@ -122,108 +269,6 @@ public class Location {
 			if(rs != null){
 				try {
 					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
-	@GET
-	@Path("/set/{ph}/{la}/{lo}")
-	public String setUserLocation(@PathParam("ph")double phone,@PathParam("la")double lat,@PathParam("lo")double lng){
-		Connection cn=null;
-		PreparedStatement ps=null;
-		
-		String query = "UPDATE user_location SET lat=?,lng=? WHERE phone=?";
-		try {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				return "Driver Class Not Loaded";
-			}
-			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
-			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
-			ps = cn.prepareStatement(query);
-			ps.setDouble(1,lat);
-			ps.setDouble(2,lng);
-			ps.setDouble(3,phone);
-			int i= ps.executeUpdate();
-			if(i==1){
-				System.out.println("SUCCESSFULLY UPDATED LOCATION WITH NEW COORDINATES");
-				return "success";
-			}
-			return "2";
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "failed transaction";
-		}
-		finally{
-			if(cn != null){
-				try {
-					cn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(ps != null){
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
-	@GET
-	@Path("/register/{ph}")
-	public String registerUser(@PathParam("ph")double ph){
-		Connection cn=null;
-		PreparedStatement ps=null;
-		boolean i;
-		
-		String query = "INSERT INTO user_location VALUES(?,0,0)";
-		try {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				return "Driver Class Not Loaded";
-			}
-			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
-			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
-			ps = cn.prepareStatement(query);
-			ps.setDouble(1,ph);
-			i= ps.execute();
-			if(i){
-				System.out.println("USER REGISTERED WITH ALREADY REGISTERED PHONE NO");
-				return "This phone no. is already registered";				
-			}else{
-				System.out.println("NEW USER SUCCESSFULLY REGISTERED WITH DEFAULT LOCATION COORDINATES");
-				return "success";
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "failed transaction";
-		}
-		
-		finally{
-			if(cn != null){
-				try {
-					cn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(ps != null){
-				try {
-					ps.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

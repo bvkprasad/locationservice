@@ -25,7 +25,7 @@ html, body {
 	var marker;
 	var user_lat,user_lng;
 	var map;
-	var no = prompt("Enter the phone no. you want to track");
+	var no = prompt("Enter the cab no. you want to track");
 	var url = "./rest/latlng/"+no;
 	function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
