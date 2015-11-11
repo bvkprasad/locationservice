@@ -16,7 +16,7 @@ public class Location {
 	
 	@GET
 	@Path("/register/{cab}")
-	public String registerCab(@PathParam("cab")double cab){
+	public String registerCab(@PathParam("cab")String cab){
 		Connection cn=null;
 		PreparedStatement ps=null;
 		boolean i;
@@ -31,7 +31,7 @@ public class Location {
 			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
-			ps.setDouble(1,cab);
+			ps.setString(1,cab);
 			i= ps.execute();
 			if(i){
 				return "DUPLICATE";				
@@ -122,7 +122,7 @@ public class Location {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				return "Driver Class Not Loaded";
+				System.out.println("Driver Class Not Loaded");
 			}
 			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
@@ -238,7 +238,7 @@ public class Location {
 			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
-			ps.setDouble(1,cab);
+			ps.setString(1,cab);
 			rs = ps.executeQuery();
 			rs.next();
 			double lat = rs.getDouble(1);
