@@ -90,6 +90,7 @@ public class Location {
 				return "FAILED";
 			}
 		}catch(SQLException e){
+			e.printStackTrace();
 			return "failed transaction";
 		}
 		finally{
@@ -118,7 +119,7 @@ public class Location {
 		Connection cn=null;
 		PreparedStatement ps=null;
 		
-		String query = "UPDATE user_location SET lat=?,lng=?,status=? WHERE cab=?";
+		String query = "UPDATE user_location SET lat=?,lng=? WHERE cab=?";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -130,11 +131,10 @@ public class Location {
 			ps = cn.prepareStatement(query);
 			ps.setDouble(1,lat);
 			ps.setDouble(2,lng);
-			ps.setString(3,status);
-			ps.setString(4,cab);
+			ps.setString(3,cab);
 			int count= ps.executeUpdate();
 			if(count==1){
-				System.out.println("Saved location successfully");
+				System.out.println("Saved location successfully"+status);
 			}
 			else{
 				System.out.println("LOCATION NOT SAVED");
