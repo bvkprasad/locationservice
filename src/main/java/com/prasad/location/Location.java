@@ -21,7 +21,7 @@ public class Location {
 		PreparedStatement ps=null;
 		boolean i;
 		
-		String query = "INSERT INTO user_location VALUES(?,0,0,0,off)";
+		String query = "INSERT INTO user_location VALUES(?,'0',0,0,0)";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
