@@ -83,7 +83,8 @@ public class Location {
 			ps.setString(1,id);
 			ps.setString(2,cab);
 			int count = ps.executeUpdate();
-			if(count==1){
+			System.out.println("count"+count);
+			if(count!=0){
 				return "OK";
 			}else{
 				return "FAILED";
