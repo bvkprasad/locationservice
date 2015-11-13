@@ -132,9 +132,9 @@ public class Location {
 			ps.setDouble(1,lat);
 			ps.setDouble(2,lng);
 			if(status.equals("true")){
-				ps.setInteger(3,1);
+				ps.setInt(3,1);
 			}else{
-				ps.setInteger(3,0);
+				ps.setInt(3,0);
 			}
 			ps.setString(4,cab);
 			int count= ps.executeUpdate();
