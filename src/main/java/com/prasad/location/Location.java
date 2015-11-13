@@ -119,7 +119,7 @@ public class Location {
 		Connection cn=null;
 		PreparedStatement ps=null;
 		
-		String query = "UPDATE user_location SET lat=?,lng=? WHERE cab=?";
+		String query = "UPDATE user_location SET lat=?,lng=?,status=? WHERE cab=?";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -131,13 +131,18 @@ public class Location {
 			ps = cn.prepareStatement(query);
 			ps.setDouble(1,lat);
 			ps.setDouble(2,lng);
-			ps.setString(3,cab);
+			if(status.equals("true"){
+				ps.setBoolean(3,1);
+			}else{
+				ps.setBoolean(3,0);
+			}
+			ps.setString(4,cab);
 			int count= ps.executeUpdate();
 			if(count==1){
-				System.out.println("Saved location successfully"+status);
+				System.out.println("Saved location successfully " +status);
 			}
 			else{
-				System.out.println("LOCATION NOT SAVED");
+				System.out.println("LOCATION NOT SAVED "+status);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
