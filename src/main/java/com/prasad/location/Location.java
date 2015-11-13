@@ -131,10 +131,10 @@ public class Location {
 			ps = cn.prepareStatement(query);
 			ps.setDouble(1,lat);
 			ps.setDouble(2,lng);
-			if(status.equals("true"){
-				ps.setBoolean(3,1);
+			if(status.equals("true")){
+				ps.setInteger(3,1);
 			}else{
-				ps.setBoolean(3,0);
+				ps.setInteger(3,0);
 			}
 			ps.setString(4,cab);
 			int count= ps.executeUpdate();
