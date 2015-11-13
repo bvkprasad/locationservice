@@ -230,7 +230,7 @@ public class Location {
 	
 	@POST
 	@Path("/latlng/{cab}")
-	public String getUserLocation(@PathParam("phone")String cab) {
+	public String getUserLocation(@PathParam("cab")String cab) {
 		Connection cn=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
