@@ -40,7 +40,7 @@ html, body {
 									user_lat = coordinates.latitude;
 									user_lng = coordinates.longitude;	
 									status = coordinates.status;
-									if(status == 1){
+									if(status === 1){
 										var marker = new google.maps.Marker({
 																	map: map,
 																	draggable:false,
@@ -54,7 +54,7 @@ html, body {
 																	draggable:false,
 																	animation: google.maps.Animation.DROP,
 																	label:no,
-																	icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+																	icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 																	position: {lat: user_lat, lng: user_lng}
 																});
 									

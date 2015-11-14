@@ -55,15 +55,15 @@
 						var status = value.status;
 						if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
 							if(status == 1){	
-								new google.maps.Marker({
-									position: value,
+								var marker = new google.maps.Marker({
+									position: j,
 									draggable: false,
 									map: map,
 									title: "cab"
 								});
 							}else{
-								new google.maps.Marker({
-									position: value,
+								var marker = new google.maps.Marker({
+									position: j,
 									draggable: false,
 									map: map,
 									title: "cab",
@@ -72,11 +72,17 @@
 							}
 						}
 					});
-				});	
-			},10000); 
+				});
+			},5000); 
 		});
     }
 	google.maps.event.addDomListener(window, "load", initMap);
+	function deleteMarkers(var mar){
+									setInterval(function(){
+													clearMarkers();
+													markers = mar;
+												},4900); 
+	}
   </script>
 </body>
 
