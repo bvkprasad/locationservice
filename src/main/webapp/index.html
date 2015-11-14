@@ -39,15 +39,28 @@ html, body {
 									var coordinates = JSON.parse(data);
 									user_lat = coordinates.latitude;
 									user_lng = coordinates.longitude;	
-									new google.maps.Marker({
-																map: map,
-																draggable:false,
-																animation: google.maps.Animation.DROP,
-																label:no,
-																position: {lat: user_lat, lng: user_lng}
-															});
+									status = coordinates.status;
+									if(status == 1){
+										var marker = new google.maps.Marker({
+																	map: map,
+																	draggable:false,
+																	animation: google.maps.Animation.DROP,
+																	label:no,
+																	position: {lat: user_lat, lng: user_lng}
+																});
+									}else{
+										var marker = new google.maps.Marker({
+																	map: map,
+																	draggable:false,
+																	animation: google.maps.Animation.DROP,
+																	label:no,
+																	icon:http://maps.google.com/mapfiles/ms/icons/blue-dot.png,
+																	position: {lat: user_lat, lng: user_lng}
+																});
+									
+									}
 									map.setCenter(new google.maps.LatLng(user_lat,user_lng));
-								
+									
 								})
 							},3000);	   
     </script>

@@ -51,18 +51,29 @@
 				$.post(url,function(data,status){
 					var latlng = JSON.parse(data);
 					$.each(latlng,function(i,value) {
-						var j = new google.maps.LatLng(value.lat,value.lng);
+						var j = new google.maps.LatLng(value.latlng.lat,value.latlng.lng);
+						var status = value.status;
 						if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
-							new google.maps.Marker({
-								position: value,
-								draggable: false,
-								map: map,
-								title: "cab"
-							});
+							if(status == 1){	
+								new google.maps.Marker({
+									position: value,
+									draggable: false,
+									map: map,
+									title: "cab"
+								});
+							}else{
+								new google.maps.Marker({
+									position: value,
+									draggable: false,
+									map: map,
+									title: "cab",
+									icon:http://maps.google.com/mapfiles/ms/icons/blue-dot.png
+								});
+							}
 						}
 					});
 				});	
-			},3000); 
+			},10000); 
 		});
     }
 	google.maps.event.addDomListener(window, "load", initMap);
