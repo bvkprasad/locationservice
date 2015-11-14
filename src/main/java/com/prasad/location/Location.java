@@ -174,7 +174,7 @@ public class Location {
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		String json = null;
-		String query = "SELECT lat,lng FROM user_location";
+		String query = "SELECT lat,lng,status FROM user_location";
 		try{
 			try{
 				Class.forName("com.mysql.jdbc.Driver");
@@ -187,7 +187,7 @@ public class Location {
 			rs = ps.executeQuery();
 			boolean check = true;
 			while(rs.next()){
-				String obj = "{\"lat\":"+rs.getDouble(1)+",\"lng\":"+rs.getDouble(2)+"}";
+			String obj = "{\"latlng\":{\"lat\":"+rs.getDouble(1)+",\"lng\":"+rs.getDouble(2)+"},\"status\":"+rs.getInt(3)+"}";
 				if(check){
 					json = obj;
 					check = false;
@@ -234,7 +234,7 @@ public class Location {
 		Connection cn=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		String query = "SELECT lat,lng FROM user_location WHERE cab = ?";
+		String query = "SELECT lat,lng,status FROM user_location WHERE cab = ?";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -249,7 +249,7 @@ public class Location {
 			rs.next();
 			double lat = rs.getDouble(1);
 			double lng = rs.getDouble(2);
-			return "{\"latitude\":"+lat+","+"\"longitude\":"+lng+"}";
+			return "{\"latitude\":"+lat+","+"\"longitude\":"+lng+",\"status\":"+rs.getInt(3)+"}";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
