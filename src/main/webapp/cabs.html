@@ -20,7 +20,7 @@
 			var json = JSON.parse(data);
 			$.each(json, function(index, value) {
 				new google.maps.Marker({
-				  position: value,
+				  position: value.latlng,
 				  draggable: false,
 				  map: map,
 				  title: "cab"
