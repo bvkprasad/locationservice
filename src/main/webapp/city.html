@@ -52,6 +52,15 @@
 					clearMarkers();
 					markers = [];				
 				}
+				function clearMarkers() {
+					setMapOnAll(null);
+				}
+				function setMapOnAll(map) {
+					for (var i = 0; i < markers.length; i++) {
+						markers[i].setMap(map);
+					}
+				}
+
 				deleteMarkers();
 				$.post(url,function(data,status){
 					var latlng = JSON.parse(data);
