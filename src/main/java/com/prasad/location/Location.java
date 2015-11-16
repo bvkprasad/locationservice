@@ -174,7 +174,7 @@ public class Location {
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		String json = null;
-		String query = "SELECT lat,lng,status FROM user_location";
+		String query = "SELECT lat,lng,status,cab FROM user_location";
 		try{
 			try{
 				Class.forName("com.mysql.jdbc.Driver");
@@ -187,7 +187,7 @@ public class Location {
 			rs = ps.executeQuery();
 			boolean check = true;
 			while(rs.next()){
-			String obj = "{\"latlng\":{\"lat\":"+rs.getDouble(1)+",\"lng\":"+rs.getDouble(2)+"},\"status\":"+rs.getInt(3)+"}";
+			String obj = "{\"latlng\":{\"lat\":"+rs.getDouble(1)+",\"lng\":"+rs.getDouble(2)+"},\"status\":"+rs.getInt(3)+",\"title\":"+rs.getString(4)"}";
 				if(check){
 					json = obj;
 					check = false;
