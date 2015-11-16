@@ -187,7 +187,7 @@ public class Location {
 			rs = ps.executeQuery();
 			boolean check = true;
 			while(rs.next()){
-			String obj = "{\"latlng\":{\"lat\":"+rs.getDouble(1)+",\"lng\":"+rs.getDouble(2)+"},\"status\":"+rs.getInt(3)+",\"title\":"+rs.getString(4)"}";
+			String obj = "{\"latlng\":{\"lat\":"+rs.getDouble(1)+",\"lng\":"+rs.getDouble(2)+"},\"status\":"+rs.getInt(3)+",\"title\":"+rs.getString(4)+"}";
 				if(check){
 					json = obj;
 					check = false;
