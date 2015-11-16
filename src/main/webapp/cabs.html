@@ -16,17 +16,29 @@
 			},
 			zoom: 5
 		});
-		$.post(url,function(data,successStatus){
-			var json = JSON.parse(data);
-			$.each(json, function(index, value) {
-				new google.maps.Marker({
-				  position: value.latlng,
-				  draggable: false,
-				  map: map,
-				  title: "cab"
+		setInterval(function(){
+			$.post(url,function(data,successStatus){
+				var json = JSON.parse(data);
+				$.each(json, function(index, value) {
+					if(value.status == 1){
+						new google.maps.Marker({
+						  position: value.latlng,
+						  draggable: false,
+						  map: map,
+						  title: value.title
+						});
+					}else{
+						new google.maps.Marker({
+						  position: value.latlng,
+						  draggable: false,
+						  map: map,
+						  icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+						  title: value.title
+						});
+					}
 				});
-			});
-		});					
+			});			
+		},5000);
     }
   </script>
   <title>Track Page</title>
