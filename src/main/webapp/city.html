@@ -46,8 +46,13 @@
 			  center: loc,
 			  radius: 20000
 			});
-				
+			var markers[];
 			setInterval(function(){
+				function deleteMarkers(){
+					clearMarkers();
+					markers = [];				
+				}
+				deleteMarkers();
 				$.post(url,function(data,status){
 					var latlng = JSON.parse(data);
 					$.each(latlng,function(i,value) {
@@ -61,6 +66,7 @@
 									map: map,
 									title: "cab"
 								});
+								markers.push(marker);
 							}else{
 								var marker = new google.maps.Marker({
 									position: j,
@@ -69,6 +75,7 @@
 									title: "cab",
 									icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 								});
+								markers.push(marker);
 							}
 						}
 					});
