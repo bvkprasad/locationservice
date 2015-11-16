@@ -63,13 +63,14 @@
 					$.each(latlng,function(i,value) {
 						var j = new google.maps.LatLng(value.latlng.lat,value.latlng.lng);
 						var status = value.status;
+						var title = value.title;
 						if(google.maps.geometry.spherical.computeDistanceBetween(j,cityCircle.getCenter())<=cityCircle.getRadius()){
 							if(status == 1){	
 								var marker = new google.maps.Marker({
 									position: j,
 									draggable: false,
 									map: map,
-									title: "cab"
+									title: title
 								});
 								markers.push(marker);
 							}else{
