@@ -31,6 +31,10 @@
 		var uri = "http://maps.googleapis.com/maps/api/geocode/json?address="+city;
 		$.getJSON(uri,function(location){
 			var loc = location.results[0].geometry.location;
+			map = new google.maps.Map(document.getElementById('map'),{
+				center: loc,
+				zoom: 11
+			});
 			var cityCircle = new google.maps.Circle({
 			  strokeColor: '#FF0000',
 			  strokeOpacity: 0.2,
@@ -39,25 +43,8 @@
 			  center: loc,
 			  radius: 20000
 			});
-			map = new google.maps.Map(document.getElementById('map'),{
-				center: loc,
-				zoom: 11
-			});
 			var markers = [];
 			setInterval(function(){
-				function deleteMarkers(){
-					clearMarkers();
-					markers = [];				
-				}
-				function clearMarkers() {
-					setMapOnAll(null);
-				}
-				function setMapOnAll(map) {
-					for (var i = 0; i < markers.length; i++) {
-						markers[i].setMap(map);
-					}
-				}
-				deleteMarkers();
 				$.post(url,function(data,status){
 					var latlng = JSON.parse(data);
 					$.each(latlng,function(i,value) {
@@ -82,10 +69,24 @@
 									icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 								});
 								markers.push(marker);
+		
 							}
 						}
 					});
 				});
+				deleteMarkers();
+				function deleteMarkers(){
+					clearMarkers();
+					markers = [];				
+				}
+				function clearMarkers() {
+					setMapOnAll(null);
+				}
+				function setMapOnAll(map) {
+					for (var i = 0; i < markers.length; i++) {
+						markers[i].setMap(map);
+					}
+				}
 			},5000); 
 		});
     }
