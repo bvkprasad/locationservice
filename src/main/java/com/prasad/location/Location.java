@@ -13,52 +13,6 @@ import javax.ws.rs.PathParam;
 
 @Path("/")
 public class Location {
-	
-	@GET
-	@Path("/end/{cab}")
-	public void changeStatus(@PathParam("cab")String cab){
-		Connection cn=null;
-		PreparedStatement ps=null;
-		boolean i;
-		
-		String query = "UPDATE user_location SET status = 0 WHERE cab = ?";
-		try {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				return "Driver Class Not Loaded";
-			}
-			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
-			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
-			ps = cn.prepareStatement(query);
-			ps.setString(1,cab);
-			ps.executeUpdate();
-			System.out.println("End of the day for "+cab);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "failed transaction";
-		}
-		
-		finally{
-			if(cn != null){
-				try {
-					cn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(ps != null){
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 	@GET
 	@Path("/register/{cab}")
 	public String registerCab(@PathParam("cab")String cab){
