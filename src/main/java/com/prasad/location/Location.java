@@ -138,6 +138,7 @@ public class Location {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("LOCATION NOT SAVED from catch"+status);
 		}
 		finally{
 			if(cn != null){
