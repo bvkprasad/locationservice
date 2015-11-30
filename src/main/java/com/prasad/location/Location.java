@@ -19,7 +19,7 @@ public class Location {
 	public void changeStatus(@PathParam("cab")String cab){
 		Connection cn=null;
 		PreparedStatement ps=null;		
-		String query = "UPDATE user_location SET status = 0 WHERE cab = ?";
+		String query = "UPDATE user_location SET status = 1 WHERE cab = ?";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
