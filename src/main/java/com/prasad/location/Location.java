@@ -107,7 +107,7 @@ public class Location {
 	
 	@GET
 	@Path("/set/{cab}/{la}/{lo}/{status}")
-	public void setCabLocation(@PathParam("cab")String cab,@PathParam("la")double lat,@PathParam("lo")double lng,@PathParam("status")String status){
+	public String setCabLocation(@PathParam("cab")String cab,@PathParam("la")double lat,@PathParam("lo")double lng,@PathParam("status")String status){
 		Connection cn=null;
 		PreparedStatement ps=null;
 		
@@ -136,9 +136,11 @@ public class Location {
 			else{
 				System.out.println("LOCATION NOT SAVED "+status);
 			}
+			return "called location updating";
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("LOCATION NOT SAVED from catch"+status);
+			return "called location updating";
 		}
 		finally{
 			if(cn != null){
