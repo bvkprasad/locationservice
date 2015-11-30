@@ -13,14 +13,13 @@ import javax.ws.rs.PathParam;
 
 @Path("/")
 public class Location {
+	
 	@GET
-	@Path("/register/{cab}")
-	public String registerCab(@PathParam("cab")String cab){
+	@Path("/end/{cab}")
+	public void changeStatus(@PathParam("cab")String cab){
 		Connection cn=null;
-		PreparedStatement ps=null;
-		boolean i;
-		
-		String query = "INSERT INTO user_location VALUES(?,'0',0,0,0)";
+		PreparedStatement ps=null;		
+		String query = "UPDATE user_location SET status = 0 WHERE cab = ?";
 		try {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -31,18 +30,13 @@ public class Location {
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
 			ps = cn.prepareStatement(query);
 			ps.setString(1,cab);
-			i= ps.execute();
-			if(i){
-				return "DUPLICATE";				
-			}else{
-				return "OK";
-			}
+			ps.executeUpdate();
+			System.out.println("End of the day for "+cab);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "failed transaction";
 		}
-		
 		finally{
 			if(cn != null){
 				try {
