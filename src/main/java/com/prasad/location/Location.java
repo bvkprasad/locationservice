@@ -24,7 +24,7 @@ public class Location {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				return "Driver Class Not Loaded";
+				System.out.println("Class not found");
 			}
 			String url = "jdbc:mysql://127.12.90.2:3306/locationservice";
 			cn = DriverManager.getConnection(url,"adminC3VsLxV","_XGEbqPApFDA");
@@ -35,7 +35,6 @@ public class Location {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "failed transaction";
 		}
 		finally{
 			if(cn != null){
