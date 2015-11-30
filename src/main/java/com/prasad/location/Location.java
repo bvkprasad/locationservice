@@ -110,7 +110,7 @@ public class Location {
 	public String setCabLocation(@PathParam("cab")String cab,@PathParam("la")double lat,@PathParam("lo")double lng,@PathParam("status")String status){
 		Connection cn=null;
 		PreparedStatement ps=null;
-		
+		System.out.println("stepped into setCabLocation now");
 		String query = "UPDATE user_location SET lat=?,lng=?,status=? WHERE cab=?";
 		try {
 			try {
